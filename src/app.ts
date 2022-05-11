@@ -1,5 +1,6 @@
 import express, { Application } from "express";
 import morgan from "morgan";
+import { AuthRouter }  from "./routes";
 
 export default class App {
   private app: Application;
@@ -24,9 +25,12 @@ export default class App {
   }
 
   private routes() {
-    this.app.use('/', (req, res) => {
-      return res.send('hello world')
-    })
+    // this.app.use('/', (req, res) => {
+    //   return res.send('hello world')
+    // });
+
+    this.app.use('/user', AuthRouter)
+
   }
 
   public start() {

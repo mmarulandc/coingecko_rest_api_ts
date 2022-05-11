@@ -26,7 +26,8 @@ model Currency {
 model User {
   userId               Int        @id @default(autoincrement())
   name                 String
-  lastname             String
+  lastName             String
+  username             String     @unique
   password             String
   favoriteCurrency     String
   userCriptoCurrencies Currency[]
