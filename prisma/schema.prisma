@@ -6,6 +6,30 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Currency {
+  id          String   @id
+  name        String  @unique
+  symbol      String  @unique
+  price       Float
+  userOwner   User     @relation(fields: [userOwnerId], references: [userId])
+  img         String
+  userOwnerId Int
+  updatedAt   DateTime @updatedAt
+  addedAt     DateTime @default(now())
+}
+
+model User {
+  userId               Int        @id @default(autoincrement())
+  name                 String
+  lastname             String
+  password             String
+  favoriteCurrency     String
+  userCriptoCurrencies Currency[]
+  updatedAt            DateTime   @updatedAt
+  createdAt            DateTime   @default(now())
 }
