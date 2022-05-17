@@ -1,6 +1,7 @@
-import express, { Application } from "express";
-import morgan from "morgan";
-import { AuthRouter }  from "./routes";
+import express, { Application } from 'express';
+import morgan from 'morgan';
+import { AuthRouter } from './routes';
+import { handleError } from './middlewares';
 
 export default class App {
   private app: Application;
@@ -11,30 +12,30 @@ export default class App {
     this.app = express();
     this.port = port || process.env.PORT || this.defaultPort;
     this.settings();
-    this.middlewares();
+    this.loadMiddlewares();
     this.routes();
+    this.loadCustomMiddlewares();
   }
 
   private settings() {
-    this.app.set("port", this.port);
+    this.app.set('port', this.port);
   }
 
-  private middlewares() {
-    this.app.use(morgan("dev"));
+  private loadMiddlewares() {
+    this.app.use(morgan('dev'));
     this.app.use(express.json());
   }
 
+  private loadCustomMiddlewares() {
+    this.app.use(handleError);
+  }
+
   private routes() {
-    // this.app.use('/', (req, res) => {
-    //   return res.send('hello world')
-    // });
-
-    this.app.use('/user', AuthRouter)
-
+    this.app.use('/user', AuthRouter);
   }
 
   public start() {
-    this.app.listen(this.app.get("port"));
-    console.log("listening on port ", this.app.get("port"));
+    this.app.listen(this.app.get('port'));
+    console.log('listening on port ', this.app.get('port'));
   }
 }

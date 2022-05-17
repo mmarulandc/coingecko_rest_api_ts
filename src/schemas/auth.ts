@@ -1,5 +1,3 @@
-import { checkSchema } from "express-validator";
-// import { AuthService } from "../services/auth/auth";
-export default signupSchema = {
-
-}
+// import { checkSchema } from "express-validator";
+// // import { AuthService } from "../services/auth/auth";
+// const signupSchema = ()
